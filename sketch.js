@@ -1,93 +1,157 @@
 const r = require("raylib");
-const f = require("./functions")
-
+const f = require("./reusableCode");
 
 const windowWidth = 400;
 const windowHeight = 200;
 
-const scanner1Width = 20;
-const scanner1Height = windowHeight;
+const detector1Width = 20;
 
-const scanner2Width = 10
+const detector2Width = 10;
 
-const maxRangefor1 = (windowWidth) / 2 - scanner1Width;
+const upperBound1 = windowWidth / 2 - detector1Width;
 
-const maxRangefor2 = windowWidth - scanner2Width;
-const minRangefor2 = (windowWidth) / 2;
+const upperBound2 = windowWidth - detector2Width;
+const lowerBound2 = windowWidth / 2;
 
+const verticalScannerHeight = 20;
 
-const verticalScannerHeight = 20
+const verticalScannerMaxRange = windowHeight - verticalScannerHeight;
 
-const verticalScannerMaxRange = windowHeight - verticalScannerHeight
+const particle1Width = 30;
+const particle1Start = 100;
+// const particle1Y = 0;
+const particle1Height = windowWidth;
 
-let scannerY = 0;
-let scanner1X = 0;
-let scanner1Y = 0;
-let scanner2X = minRangefor2;
+const particle2Start = 300;
+// const particle2Y = 0;
+const particle2Width = 20;
+const particle2Height = windowHeight;
 
-let scanner1Speed = 5;
-let scanner2Speed = 3;
-let scanner3Speed = 3;
+const verticalParticleY = 100;
+const verticalParticleHeight = 10;
+
+let detector1Start = 0;
+let detector2Start = lowerBound2;
+let detector3Start = 0;
+
+let detectorVelocity1 = 5;
+let detectorVelocity2 = 3;
+let detectorVelocity3 = 3;
 
 function running() {
   return !r.WindowShouldClose();
 }
 
 function setup() {
-  r.InitWindow(windowWidth, windowHeight, "scanner",);
+  r.SetTraceLogLevel(r.LOG_NONE);
+  r.InitWindow(windowWidth, windowHeight, "scanner");
   r.SetTargetFPS(60);
 }
 
-
 function update() {
+  detectorVelocity1 = f.moving(
+    detector1Start,
+    upperBound1,
+    0,
+    detectorVelocity1,
+  );
+  detector1Start = detector1Start + detectorVelocity1;
 
-  scanner1Speed = f.moving(scanner1X, maxRangefor1, 0, scanner1Speed);
-  scanner1X = scanner1X + scanner1Speed;
+  detectorVelocity2 = f.moving(
+    detector2Start,
+    upperBound2,
+    lowerBound2,
+    detectorVelocity2,
+  );
+  detector2Start = detector2Start + detectorVelocity2;
 
-  scanner2Speed = f.moving(scanner2X, maxRangefor2, minRangefor2, scanner2Speed);
-  scanner2X = scanner2X + scanner2Speed;
-
-  scanner3Speed = f.moving(scannerY, verticalScannerMaxRange, 0, scanner3Speed);
-  scannerY = scannerY + scanner3Speed;
-
+  detectorVelocity3 = f.moving(
+    detector3Start,
+    verticalScannerMaxRange,
+    0,
+    detectorVelocity3,
+  );
+  detector3Start = detector3Start + detectorVelocity3;
 }
-
 
 function draw() {
   r.BeginDrawing();
   r.ClearBackground(r.BLACK);
 
-  const particle1Width = 30;
-  const particle1X = 100;
-  const particle1Y = 0;
-  const particle1Height = windowWidth;
+  let detector1Color =
+    f.changeColor(
+      detector1Start,
+      detector1Width,
+      particle1Start,
+      particle1Width,
+    ) ||
+    f.changeColor(
+      detector1Start,
+      detector1Width,
+      particle2Start,
+      particle2Width,
+    )
+      ? r.RED
+      : r.WHITE;
 
-  const particle2X = 300;
-  const particle2Y = 0;
-  const particle2Width = 20;
-  const particle2Height = windowHeight;
+  let detector2Color =
+    f.changeColor(
+      detector2Start,
+      detector2Width,
+      particle2Start,
+      particle2Width,
+    ) ||
+    f.changeColor(
+      detector2Start,
+      detector2Width,
+      particle2Start,
+      particle2Width,
+    )
+      ? r.RED
+      : r.WHITE;
 
+  let detector3Color = f.changeColor(
+    detector3Start,
+    verticalScannerHeight,
+    verticalParticleY,
+    verticalParticleHeight,
+  )
+    ? r.RED
+    : r.WHITE;
 
-  const verticalParticleX = 0;
-  const verticalParticleY = 100;
-  const verticalParticleWidth = windowWidth;
-  const verticalParticleHeight = 10;
+  r.DrawRectangle(particle1Start, 0, particle1Width, particle1Height, r.BLUE);
+  r.DrawRectangle(particle2Start, 0, particle2Width, particle2Height, r.BLUE);
+  r.DrawRectangle(
+    detector1Start,
+    0,
+    detector1Width,
+    r.GetScreenHeight(),
+    detector1Color,
+  );
+  r.DrawRectangle(
+    detector2Start,
+    0,
+    detector2Width,
+    r.GetScreenHeight(),
+    detector2Color,
+  );
 
+  r.DrawRectangle(
+    0,
+    verticalParticleY,
+    r.GetScreenWidth(),
+    verticalParticleHeight,
+    r.BLUE,
+  );
+  r.DrawRectangle(
+    0,
+    detector3Start,
+    windowWidth,
+    verticalScannerHeight,
+    detector3Color,
+  );
 
-  let colorFor1 = f.changeColor(scanner1X, scanner1Width, particle1X, particle1Width) || f.changeColor(scanner1X, scanner1Width, particle2X, particle2Width) ? r.RED : r.WHITE;
-  let colorFor2 = f.changeColor(scanner2X, scanner2Width, particle2X, particle2Width) || f.changeColor(scanner2X, scanner2Width, particle2X, particle2Width) ? r.RED : r.WHITE;
-
-  let colorV = f.changeColor(scannerY, verticalScannerHeight, verticalParticleY, verticalParticleHeight) ? r.RED : r.WHITE;
-
-  r.DrawRectangle(particle1X, particle1Y, particle1Width, particle1Height, r.BLUE);
-  r.DrawRectangle(particle2X, particle2Y, particle2Width, particle2Height, r.BLUE);
-  r.DrawRectangle(scanner1X, scanner1Y, scanner1Width, scanner1Height, colorFor1);
-  r.DrawRectangle(scanner2X, 0, scanner2Width, scanner1Height, colorFor2);
-
-  r.DrawRectangle(verticalParticleX, verticalParticleY, verticalParticleWidth, verticalParticleHeight, r.BLUE)
-  r.DrawRectangle(0, scannerY, windowWidth, verticalScannerHeight, colorV);
-
-  r.EndDrawing()
+  r.EndDrawing();
 }
 
 function teardown() {
