@@ -2,13 +2,13 @@ const r = require("raylib");
 const f = require("./functions")
 
 
-const windowWidth = 600;
-const windowHeight = 300;
+const windowWidth = 400;
+const windowHeight = 200;
 
-const scanner1Width = 50;
+const scanner1Width = 20;
 const scanner1Height = windowHeight;
 
-const scanner2Width = 20
+const scanner2Width = 10
 
 const maxRangefor1 = (windowWidth) / 2 - scanner1Width;
 
@@ -16,7 +16,7 @@ const maxRangefor2 = windowWidth - scanner2Width;
 const minRangefor2 = (windowWidth) / 2;
 
 
-const verticalScannerHeight = 40
+const verticalScannerHeight = 20
 
 const verticalScannerMaxRange = windowHeight - verticalScannerHeight
 
@@ -24,6 +24,10 @@ let scannerY = 0;
 let scanner1X = 0;
 let scanner1Y = 0;
 let scanner2X = minRangefor2;
+
+let scanner1Speed = 5;
+let scanner2Speed = 3;
+let scanner3Speed = 3;
 
 function running() {
   return !r.WindowShouldClose();
@@ -34,13 +38,20 @@ function setup() {
   r.SetTargetFPS(60);
 }
 
+
 function update() {
 
-  scanner1X = f.movingHorizontally1(scanner1X, maxRangefor1, 0);
-  scanner2X = f.movingHorizontally2(scanner2X, maxRangefor2, minRangefor2);
-  scannerY = f.movingVertically(scannerY, verticalScannerMaxRange, 0);
+  scanner1Speed = f.moving(scanner1X, maxRangefor1, 0, scanner1Speed);
+  scanner1X = scanner1X + scanner1Speed;
+
+  scanner2Speed = f.moving(scanner2X, maxRangefor2, minRangefor2, scanner2Speed);
+  scanner2X = scanner2X + scanner2Speed;
+
+  scanner3Speed = f.moving(scannerY, verticalScannerMaxRange, 0, scanner3Speed);
+  scannerY = scannerY + scanner3Speed;
 
 }
+
 
 function draw() {
   r.BeginDrawing();
@@ -51,7 +62,7 @@ function draw() {
   const particle1Y = 0;
   const particle1Height = windowWidth;
 
-  const particle2X = 500;
+  const particle2X = 300;
   const particle2Y = 0;
   const particle2Width = 20;
   const particle2Height = windowHeight;
