@@ -1,42 +1,32 @@
 const r = require("raylib");
-const f = require("./reusableCode");
+const f = require("./detectorFunctions");
 
 const windowWidth = 400;
 const windowHeight = 200;
 
 const detector1Width = 20;
-
-const detector2Width = 10;
-
-const upperBound1 = windowWidth / 2 - detector1Width;
-
-const upperBound2 = windowWidth - detector2Width;
-const lowerBound2 = windowWidth / 2;
-
-const verticalScannerHeight = 20;
-
-const verticalScannerMaxRange = windowHeight - verticalScannerHeight;
-
 const particle1Width = 30;
 const particle1Start = 100;
-// const particle1Y = 0;
+const upperBound1 = windowWidth / 2 - detector1Width;
 const particle1Height = windowWidth;
+let detector1Start = 0;
+let detectorVelocity1 = 5;
 
-const particle2Start = 300;
-// const particle2Y = 0;
-const particle2Width = 20;
+const detector2Width = 10;
 const particle2Height = windowHeight;
+const particle2Start = 300;
+const particle2Width = 20;
+const upperBound2 = windowWidth - detector2Width;
+const lowerBound2 = windowWidth / 2;
+let detector2Start = lowerBound2;
+let detectorVelocity3 = 3;
 
+const detector2Height = 20;
+const upperBound3 = windowHeight - detector2Height;
 const verticalParticleY = 100;
 const verticalParticleHeight = 10;
-
-let detector1Start = 0;
-let detector2Start = lowerBound2;
 let detector3Start = 0;
-
-let detectorVelocity1 = 5;
 let detectorVelocity2 = 3;
-let detectorVelocity3 = 3;
 
 function running() {
   return !r.WindowShouldClose();
@@ -49,29 +39,29 @@ function setup() {
 }
 
 function update() {
-  detectorVelocity1 = f.moving(
+  detectorVelocity1 = f.detectorVelocity(
+    detectorVelocity1,
     detector1Start,
     upperBound1,
     0,
-    detectorVelocity1,
   );
-  detector1Start = detector1Start + detectorVelocity1;
+  detector1Start = f.moveDetector(detector1Start, detectorVelocity1);
 
-  detectorVelocity2 = f.moving(
+  detectorVelocity2 = f.detectorVelocity(
+    detectorVelocity2,
     detector2Start,
     upperBound2,
     lowerBound2,
-    detectorVelocity2,
   );
-  detector2Start = detector2Start + detectorVelocity2;
+  detector2Start = f.moveDetector(detector2Start, detectorVelocity2);
 
-  detectorVelocity3 = f.moving(
-    detector3Start,
-    verticalScannerMaxRange,
-    0,
+  detectorVelocity3 = f.detectorVelocity(
     detectorVelocity3,
+    detector3Start,
+    upperBound3,
+    0,
   );
-  detector3Start = detector3Start + detectorVelocity3;
+  detector3Start = f.moveDetector(detector3Start, detectorVelocity3);
 }
 
 function draw() {
@@ -112,7 +102,7 @@ function draw() {
 
   let detector3Color = f.changeColor(
     detector3Start,
-    verticalScannerHeight,
+    detector2Height,
     verticalParticleY,
     verticalParticleHeight,
   )
@@ -146,8 +136,8 @@ function draw() {
   r.DrawRectangle(
     0,
     detector3Start,
-    windowWidth,
-    verticalScannerHeight,
+    r.GetScreenWidth(),
+    detector2Height,
     detector3Color,
   );
 
