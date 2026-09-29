@@ -10,8 +10,8 @@ function hasReachedBounds(start, upperBound, lowerBound) {
   return start > upperBound || start < lowerBound;
 }
 
-function detectorDetectsParticle(sX, sW, pX, pW) {
-  return sX + sW >= pX && sX <= pX + pW ? true : false;
+function detectorDetectsParticle(dS, dW, pS, pW) {
+  return dS + dW >= pS && dS <= pS + pW ? true : false;
 }
 
 module.exports = {

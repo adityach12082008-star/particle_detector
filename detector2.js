@@ -8,8 +8,8 @@ const particleStart = 300;
 const particleWidth = 20;
 const upperBound = windowWidth - width;
 const lowerBound = windowWidth / 2;
-let detectorStart = lowerBound;
-let detectorVelocity = 3;
+let start = lowerBound;
+let velocity = 3;
 
 module.exports = {
   width,
@@ -19,6 +19,6 @@ module.exports = {
   particleWidth,
   upperBound,
   lowerBound,
-  detectorStart,
-  detectorVelocity,
+  start,
+  velocity,
 };

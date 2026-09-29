@@ -11,7 +11,7 @@ let start = 0;
 let velocity = 5;
 
 module.exports = {
-  Width: width,
+  width,
   particleWidth,
   particleStart,
   upperBound,

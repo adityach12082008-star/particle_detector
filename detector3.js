@@ -1,5 +1,3 @@
-windowHeight = 200;
-
 const d2 = require("./detector2");
 
 const upperBound = windowHeight - d2.height;
