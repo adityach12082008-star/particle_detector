@@ -1,19 +1,19 @@
 windowWidth = 400;
 windowHeight = 200;
 
-const detector2Width = 10;
-const detector2Height = 20;
-const particle2Height = windowHeight;
-const particle2Start = 300;
-const particle2Width = 20;
-const upperBound2 = windowWidth - detector2Width;
-const lowerBound2 = windowWidth / 2;
-let detector2Start = lowerBound2;
-let detectorVelocity3 = 3;
+const width = 10;
+const height = 20;
+const particleHeight = windowHeight;
+const particleStart = 300;
+const particleWidth = 20;
+const upperBound = windowWidth - width;
+const lowerBound = windowWidth / 2;
+let detectorStart = lowerBound;
+let detectorVelocity = 3;
 
 module.exports = {
-  detectorHeight,
-  detectorWidth,
+  width,
+  height,
   particleHeight,
   particleStart,
   particleWidth,
