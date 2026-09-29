@@ -1,8 +1,34 @@
 const r = require("raylib");
 const f = require("./detectorFunctions");
-const d = require("./detector");
+const d = require("./detector1");
+
 const windowWidth = 400;
 const windowHeight = 200;
+
+// const d1.Width = 20;
+// const d1.particleWidth = 30;
+// const d1.particleStart = 100;
+// const d1.upperBound = windowWidth / 2 - d.Width;
+// const d1.particleHeight = windowWidth;
+// let d1.scannertart = 0;
+// let d1.velocity = 5;
+
+//for Detector2
+const detector2Width = 10;
+const detector2Height = 20;
+const particle2Height = windowHeight;
+const particle2Start = 300;
+const particle2Width = 20;
+const upperBound2 = windowWidth - detector2Width;
+const lowerBound2 = windowWidth / 2;
+let detector2Start = lowerBound2;
+let detectorVelocity3 = 3;
+
+const upperBound3 = windowHeight - detector2Height;
+const verticalParticleY = 100;
+const verticalParticleHeight = 10;
+let detector3Start = 0;
+let detectorVelocity2 = 3;
 
 function running() {
   return !r.WindowShouldClose();
@@ -15,29 +41,24 @@ function setup() {
 }
 
 function update() {
-  d.detectorVelocity1 = f.detectorVelocity(
-    d.detectorVelocity1,
-    d.detector1Start,
-    d.upperBound1,
+  d.Velocity = f.detectorVelocity(d.Velocity, d.Start, d.upperBound, 0);
+  d.Start = f.moveDetector(d.Start, d.Velocity);
+
+  detectorVelocity2 = f.detectorVelocity(
+    detectorVelocity2,
+    detector2Start,
+    upperBound2,
+    lowerBound2,
+  );
+  detector2Start = f.moveDetector(detector2Start, detectorVelocity2);
+
+  detectorVelocity3 = f.detectorVelocity(
+    detectorVelocity3,
+    detector3Start,
+    upperBound3,
     0,
   );
-  d.detector1Start = f.moveDetector(d.detector1Start, d.detectorVelocity1);
-
-  d.detectorVelocity2 = f.detectorVelocity(
-    d.detectorVelocity2,
-    d.detector2Start,
-    d.upperBound2,
-    d.lowerBound2,
-  );
-  d.detector2Start = f.moveDetector(d.detector2Start, d.detectorVelocity2);
-
-  d.detectorVelocity3 = f.detectorVelocity(
-    d.detectorVelocity3,
-    d.detector3Start,
-    d.upperBound3,
-    0,
-  );
-  d.detector3Start = f.moveDetector(d.detector3Start, d.detectorVelocity3);
+  detector3Start = f.moveDetector(detector3Start, detectorVelocity3);
 }
 
 function draw() {
@@ -46,86 +67,69 @@ function draw() {
 
   let detector1Color =
     f.detectorDetectsParticle(
-      d.detector1Start,
-      d.detector1Width,
-      d.particle1Start,
-      d.particle1Width,
+      d.Start,
+      d.Width,
+      d.particleStart,
+      d.particleWidth,
     ) ||
-    f.detectorDetectsParticle(
-      d.detector1Start,
-      d.detector1Width,
-      d.particle2Start,
-      d.particle2Width,
-    )
+    f.detectorDetectsParticle(d.Start, d.Width, particle2Start, particle2Width)
       ? r.RED
       : r.WHITE;
 
   let detector2Color =
     f.detectorDetectsParticle(
-      d.detector2Start,
-      d.detector2Width,
-      d.particle2Start,
-      d.particle2Width,
+      detector2Start,
+      detector2Width,
+      particle2Start,
+      particle2Width,
     ) ||
     f.detectorDetectsParticle(
-      d.detector2Start,
-      d.detector2Width,
-      d.particle2Start,
-      d.particle2Width,
+      detector2Start,
+      detector2Width,
+      particle2Start,
+      particle2Width,
     )
       ? r.RED
       : r.WHITE;
 
   let detector3Color = f.detectorDetectsParticle(
-    d.detector3Start,
-    d.detector2Height,
-    d.verticalParticleY,
-    d.verticalParticleHeight,
+    detector3Start,
+    detector2Height,
+    verticalParticleY,
+    verticalParticleHeight,
   )
     ? r.RED
     : r.WHITE;
 
   r.DrawRectangle(
-    d.particle1Start,
+    d.particleStart,
     0,
-    d.particle1Width,
-    d.particle1Height,
+    d.particleWidth,
+    d.particleHeight,
     r.BLUE,
   );
+  r.DrawRectangle(particle2Start, 0, particle2Width, particle2Height, r.BLUE);
+  r.DrawRectangle(d.Start, 0, d.Width, r.GetScreenHeight(), detector1Color);
   r.DrawRectangle(
-    d.particle2Start,
+    detector2Start,
     0,
-    d.particle2Width,
-    d.particle2Height,
-    r.BLUE,
-  );
-  r.DrawRectangle(
-    d.detector1Start,
-    0,
-    d.detector1Width,
-    r.GetScreenHeight(),
-    detector1Color,
-  );
-  r.DrawRectangle(
-    d.detector2Start,
-    0,
-    d.detector2Width,
+    detector2Width,
     r.GetScreenHeight(),
     detector2Color,
   );
 
   r.DrawRectangle(
     0,
-    d.verticalParticleY,
+    verticalParticleY,
     r.GetScreenWidth(),
-    d.verticalParticleHeight,
+    verticalParticleHeight,
     r.BLUE,
   );
   r.DrawRectangle(
     0,
-    d.detector3Start,
+    detector3Start,
     r.GetScreenWidth(),
-    d.detector2Height,
+    detector2Height,
     detector3Color,
   );
 
