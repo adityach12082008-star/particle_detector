@@ -2,15 +2,16 @@ const r = require("raylib");
 const f = require("./detectorFunctions");
 const d = require("./detector1");
 const d2 = require("./detector2");
+const d3 = require("./detector3");
 
 const windowWidth = 400;
 const windowHeight = 200;
 
-const upperBound3 = windowHeight - d2.height;
-const verticalParticleY = 100;
-const verticalParticleHeight = 10;
-let detector3Start = 0;
-let detectorVelocity3 = 3;
+// const d3.upperBound = windowHeight - d2.height;
+// const d3.verticalParticleY = 100;
+// const d3.verticalParticleHeight = 10;
+// let d3.start = 0;
+// let d3.velocity = 3;
 
 function running() {
   return !r.WindowShouldClose();
@@ -34,13 +35,8 @@ function update() {
   );
   d2.detectorStart = f.moveDetector(d2.detectorStart, d2.detectorVelocity);
 
-  detectorVelocity3 = f.detectorVelocity(
-    detectorVelocity3,
-    detector3Start,
-    upperBound3,
-    0,
-  );
-  detector3Start = f.moveDetector(detector3Start, detectorVelocity3);
+  d3.velocity = f.detectorVelocity(d3.velocity, d3.start, d3.upperBound, 0);
+  d3.start = f.moveDetector(d3.start, d3.velocity);
 }
 
 function draw() {
@@ -80,10 +76,10 @@ function draw() {
       : r.WHITE;
 
   let detector3Color = f.detectorDetectsParticle(
-    detector3Start,
+    d3.start,
     d2.height,
-    verticalParticleY,
-    verticalParticleHeight,
+    d3.verticalParticleY,
+    d3.verticalParticleHeight,
   )
     ? r.RED
     : r.WHITE;
@@ -113,18 +109,12 @@ function draw() {
 
   r.DrawRectangle(
     0,
-    verticalParticleY,
+    d3.verticalParticleY,
     r.GetScreenWidth(),
-    verticalParticleHeight,
+    d3.verticalParticleHeight,
     r.BLUE,
   );
-  r.DrawRectangle(
-    0,
-    detector3Start,
-    r.GetScreenWidth(),
-    d2.height,
-    detector3Color,
-  );
+  r.DrawRectangle(0, d3.start, r.GetScreenWidth(), d2.height, detector3Color);
 
   r.EndDrawing();
 }

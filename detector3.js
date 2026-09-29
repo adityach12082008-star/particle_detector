@@ -1,13 +1,17 @@
-const upperBound3 = windowHeight - detector2Height;
+windowHeight = 200;
+
+const d2 = require("./detector2");
+
+const upperBound = windowHeight - d2.height;
 const verticalParticleY = 100;
 const verticalParticleHeight = 10;
-let detector3Start = 0;
-let detectorVelocity2 = 3;
+let start = 0;
+let velocity = 3;
 
 module.exports = {
-  upperBound3: upperBound,
+  upperBound,
   verticalParticleY,
   verticalParticleHeight,
-  detector3Start: detectorStart,
-  detectorVelocity2: detectorVelocity,
+  start,
+  velocity,
 };
