@@ -1,4 +1,4 @@
-function deriveVelocity(velocity, start, upperBound, lowerBound) {
+function detectorVelocity(velocity, start, upperBound, lowerBound) {
   return hasReachedBounds(start, upperBound, lowerBound) ? -velocity : velocity;
 }
 
@@ -10,13 +10,13 @@ function hasReachedBounds(start, upperBound, lowerBound) {
   return start > upperBound || start < lowerBound;
 }
 
-function changeColor(sX, sW, pX, pW) {
+function detectorDetectsParticle(sX, sW, pX, pW) {
   return sX + sW >= pX && sX <= pX + pW ? true : false;
 }
 
 module.exports = {
   moveDetector,
   hasReachedBounds,
-  detectorVelocity: deriveVelocity,
-  changeColor,
+  detectorVelocity,
+  detectorDetectsParticle,
 };
