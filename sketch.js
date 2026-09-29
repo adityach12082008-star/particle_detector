@@ -3,9 +3,10 @@ const f = require("./detectorFunctions");
 const d = require("./detector1");
 const d2 = require("./detector2");
 const d3 = require("./detector3");
+const w = require("./window.js");
 
-const windowWidth = 400;
-const windowHeight = 200;
+// const windowWidth = 400;
+// const windowHeight = 200;
 
 function running() {
   return !r.WindowShouldClose();
@@ -13,7 +14,7 @@ function running() {
 
 function setup() {
   r.SetTraceLogLevel(r.LOG_NONE);
-  r.InitWindow(windowWidth, windowHeight, "scanner");
+  r.InitWindow(w.windowWidth, w.windowHeight, "scanner");
   r.SetTargetFPS(60);
 }
 
@@ -63,8 +64,8 @@ function draw() {
     f.detectorDetectsParticle(
       d2.start,
       d2.width,
-      d2.particleStart,
-      d2.particleWidth,
+      d.particleStart,
+      d.particleWidth,
     )
       ? r.RED
       : r.WHITE;

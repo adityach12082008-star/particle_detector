@@ -1,12 +1,11 @@
-windowWidth = 400;
-windowHeight = 200;
+const w = require("./window.js");
 
 //for Detector1
 const width = 20;
 const particleWidth = 30;
 const particleStart = 100;
-const upperBound = windowWidth / 2 - width;
-const particleHeight = windowWidth;
+const upperBound = w.windowWidth / 2 - width;
+const particleHeight = w.windowHeight;
 let start = 0;
 let velocity = 5;
 

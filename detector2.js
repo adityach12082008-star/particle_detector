@@ -1,13 +1,12 @@
-windowWidth = 400;
-windowHeight = 200;
+const w = require("./window.js");
 
 const width = 10;
 const height = 20;
-const particleHeight = windowHeight;
-const particleStart = 300;
+const particleHeight = w.windowHeight;
+const particleStart = 50;
 const particleWidth = 20;
-const upperBound = windowWidth - width;
-const lowerBound = windowWidth / 2;
+const upperBound = w.windowWidth - width;
+const lowerBound = w.windowWidth / 2;
 let start = lowerBound;
 let velocity = 3;
 

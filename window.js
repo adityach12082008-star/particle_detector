@@ -1,7 +1,7 @@
-windowHeight = 500;
-windowWidth = 300;
+windowHeight = 400;
+windowWidth = 200;
 
 module.exports = {
-  wondowHeight,
+  windowHeight,
   windowWidth,
 };

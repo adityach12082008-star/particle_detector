@@ -1,6 +1,7 @@
 const d2 = require("./detector2");
+const w = require("./window.js");
 
-const upperBound = windowHeight - d2.height;
+const upperBound = w.windowHeight - d2.height;
 const verticalParticleY = 100;
 const verticalParticleHeight = 10;
 let start = 0;
