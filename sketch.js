@@ -41,8 +41,8 @@ function setup() {
 }
 
 function update() {
-  d.Velocity = f.detectorVelocity(d.Velocity, d.Start, d.upperBound, 0);
-  d.Start = f.moveDetector(d.Start, d.Velocity);
+  d.velocity = f.detectorVelocity(d.velocity, d.start, d.upperBound, 0);
+  d.start = f.moveDetector(d.start, d.velocity);
 
   detectorVelocity2 = f.detectorVelocity(
     detectorVelocity2,
@@ -67,12 +67,12 @@ function draw() {
 
   let detector1Color =
     f.detectorDetectsParticle(
-      d.Start,
+      d.start,
       d.Width,
       d.particleStart,
       d.particleWidth,
     ) ||
-    f.detectorDetectsParticle(d.Start, d.Width, particle2Start, particle2Width)
+    f.detectorDetectsParticle(d.start, d.Width, particle2Start, particle2Width)
       ? r.RED
       : r.WHITE;
 
@@ -109,7 +109,7 @@ function draw() {
     r.BLUE,
   );
   r.DrawRectangle(particle2Start, 0, particle2Width, particle2Height, r.BLUE);
-  r.DrawRectangle(d.Start, 0, d.Width, r.GetScreenHeight(), detector1Color);
+  r.DrawRectangle(d.start, 0, d.Width, r.GetScreenHeight(), detector1Color);
   r.DrawRectangle(
     detector2Start,
     0,

@@ -2,20 +2,20 @@ windowWidth = 400;
 windowHeight = 200;
 
 //for Detector1
-const Width = 20;
+const width = 20;
 const particleWidth = 30;
 const particleStart = 100;
-const upperBound = windowWidth / 2 - Width;
+const upperBound = windowWidth / 2 - width;
 const particleHeight = windowWidth;
-let Start = 0;
-let Velocity = 5;
+let start = 0;
+let velocity = 5;
 
 module.exports = {
-  Width,
+  Width: width,
   particleWidth,
   particleStart,
   upperBound,
   particleHeight,
-  Start,
-  Velocity,
+  start,
+  velocity,
 };
